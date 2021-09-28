@@ -10,7 +10,8 @@ const HomeContainer : React.FC = () => {
   const [categoryIdx, setCategoryIdx] = useState(0)
   const [categoryId, setCategoryId] = useState(1)
   const [page, setPage] = useState(1)
-  const [size, setSize] = useState(10)
+  const [size, setSize] = useState(6)
+  const [loading, setLoading] = useState(false)
   
   const getCategories = async () => {
     const result = await fetchCategories()
@@ -19,7 +20,7 @@ const HomeContainer : React.FC = () => {
 
   const getBooks = async () => {
     const result = await fetchBooksByCategory({
-      id: categoryId, page, size
+      id: categoryId, page, size, setLoading
     })
     setBooks(result)
   }
@@ -30,10 +31,7 @@ const HomeContainer : React.FC = () => {
 
   useEffect(() => {
     getBooks()
-  }, [categoryId])
-
-  console.log('books', books)
-  console.log('id', categoryId)
+  }, [categoryId, size])
   
   return (
     <Layout title="Home Booku">
@@ -44,7 +42,13 @@ const HomeContainer : React.FC = () => {
           setCategoryIdx={setCategoryIdx}
           setCategoryId={setCategoryId}
         />
-        <BookLists books={books} categories={categories} />
+        <BookLists 
+          books={books} 
+          categories={categories} 
+          loading={loading}
+          size={size}
+          setSize={setSize} 
+        />
       </>
     </Layout>
   )
