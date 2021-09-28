@@ -1,8 +1,8 @@
 import { NextPage } from 'next';
-import { HomeContainer } from '../app/containers';
+import { FavoriteContainer } from '../app/containers';
 
 const HomePage : NextPage = () => {
-  return <HomeContainer />
+  return <FavoriteContainer />
 }
 
 export default HomePage;
