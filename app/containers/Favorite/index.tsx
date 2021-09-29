@@ -1,13 +1,15 @@
 import styled from "@emotion/styled";
 import Link from 'next/link'
-import { useEffect, useState } from "react";
-import { MediaQuery } from "../../../utils/mq";
+import { useContext, useEffect, useState } from "react";
+import { Context } from "../../../context/store";
 import { CardBook, Title } from "../../components";
 import Layout from "../../layouts";
 
 
 const FavoriteContainer : React.FC = () => {
   const [books, setBooks] = useState([])
+  const [state] = useContext(Context);
+
   
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -19,13 +21,17 @@ const FavoriteContainer : React.FC = () => {
     }
   }, [])
 
+  const filterData = books && books.filter((filt: any) =>
+    filt?.title?.toLowerCase()?.includes(state?.keyword?.toLowerCase())
+  );
+
   return (
     <Layout>
       <FavoriteContainerStyled>
         <Title title="Daftar Buku Favorit" />
         <Wrapper>
           {
-            books.length ? books.map((book: any, idx: number) => {
+            filterData.length ? filterData.map((book: any, idx: number) => {
               return (
                 <Link href={{pathname: `/detail/${book.id}`, query: {categoryId: book.category_id, size: book.size}}} key={idx}>
                   <a>
