@@ -10,6 +10,10 @@ export const HeaderStyle = styled.header`
   top: 0;
   width: 100%;
   padding: 10px;
+  h1 {
+    color: white;
+    font-size: 16px;
+  }
   ${MediaQuery.smMin} {
     padding: 10px 0;
   }

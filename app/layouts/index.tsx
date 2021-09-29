@@ -6,10 +6,12 @@ import TabBottom from "./TabBottom";
 
 interface ILayout {
   title?: string;
+  hasSearch?: boolean;
+  hasBottom?: boolean;
   children?: JSX.Element;
 }
 
-const Layout : React.FC<ILayout> = ({title, children}) => {
+const Layout : React.FC<ILayout> = ({title, hasSearch, hasBottom = true, children}) => {
   return (
     <>
       <Head>
@@ -17,11 +19,11 @@ const Layout : React.FC<ILayout> = ({title, children}) => {
         <meta name="theme-color" content="#2b46a6" />
         <link rel='manifest' href='/manifest.json' />
       </Head>
-      <Header />
+      <Header hasSearch={hasSearch} />
         <Content>
           {children}
         </Content>
-      <TabBottom />
+        {hasBottom && <TabBottom />}
     </>
   )
 }
